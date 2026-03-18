@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: songk-upload
+
+  r2dbc:
+    url: r2dbc:h2:mem:///uploaddb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+
+  webflux:
+    multipart:
+      max-file-size: 52428800
+      max-request-size: 52428800
+
+  codec:
+    max-in-memory-size: 52428800
+
+file:
+  storage:
+    path: ./uploads
+
+jwt:
+  secret: songk-upload-super-secret-key-that-is-at-least-256-bits-long-for-hmac256
+  expiration: 3600000
