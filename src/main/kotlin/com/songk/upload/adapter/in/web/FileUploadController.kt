@@ -1,12 +1,14 @@
 package com.songk.upload.adapter.`in`.web
 
 import com.songk.upload.adapter.`in`.web.dto.FileUploadResponse
+import com.songk.upload.adapter.`in`.web.dto.FileUploadSchema
 import com.songk.upload.application.command.UploadCommand
 import com.songk.upload.domain.port.`in`.FileUploadUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -38,10 +40,16 @@ class FileUploadController(
             ApiResponse(responseCode = "413", description = "파일 크기 초과", content = [Content(schema = Schema(hidden = true))])
         ]
     )
+    @RequestBody(
+        content = [Content(
+            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+            schema = Schema(implementation = FileUploadSchema::class)
+        )]
+    )
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     @ResponseStatus(HttpStatus.CREATED)
     suspend fun upload(
-        @Parameter(description = "업로드할 파일") @RequestPart("file") filePart: FilePart,
+        @Parameter(hidden = true) @RequestPart("file") filePart: FilePart,
         authentication: Authentication
     ): FileUploadResponse {
         val contentType = filePart.headers().contentType?.toString() ?: "application/octet-stream"
