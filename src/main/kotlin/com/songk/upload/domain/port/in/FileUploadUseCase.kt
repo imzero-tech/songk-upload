@@ -1,6 +1,6 @@
 package com.songk.upload.domain.port.`in`
 
-import com.songk.upload.application.command.UploadCommand
+import com.songk.upload.domain.port.`in`.UploadCommand
 import com.songk.upload.domain.model.FileUpload
 import kotlinx.coroutines.flow.Flow
 

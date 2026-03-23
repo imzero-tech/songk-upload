@@ -2,7 +2,7 @@ package com.songk.upload.adapter.`in`.web
 
 import com.songk.upload.adapter.`in`.web.dto.FileUploadResponse
 import com.songk.upload.adapter.`in`.web.dto.FileUploadSchema
-import com.songk.upload.application.command.UploadCommand
+import com.songk.upload.domain.port.`in`.UploadCommand
 import com.songk.upload.domain.port.`in`.FileUploadUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter

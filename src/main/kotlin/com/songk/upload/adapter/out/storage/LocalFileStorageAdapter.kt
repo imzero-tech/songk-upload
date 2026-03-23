@@ -1,5 +1,6 @@
 package com.songk.upload.adapter.out.storage
 
+import com.songk.upload.domain.model.StorageResult
 import com.songk.upload.domain.port.out.FileStoragePort
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,7 +15,7 @@ class LocalFileStorageAdapter(
     @Value("\${file.storage.path}") private val storagePath: String
 ) : FileStoragePort {
 
-    override suspend fun store(fileName: String, content: ByteArray, contentType: String): String {
+    override suspend fun store(fileName: String, content: ByteArray, contentType: String): StorageResult {
         val extension = fileName.substringAfterLast('.', "")
         val storedName = if (extension.isNotEmpty()) "${UUID.randomUUID()}.$extension"
                          else UUID.randomUUID().toString()
@@ -25,7 +26,7 @@ class LocalFileStorageAdapter(
             Files.write(targetPath, content)
         }
 
-        return targetPath.toString()
+        return StorageResult(storagePath = targetPath.toString(), storedFileName = storedName)
     }
 
     override suspend fun delete(storagePath: String) {
